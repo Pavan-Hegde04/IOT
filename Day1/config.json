@@ -1,0 +1,22 @@
+{
+    "broker_host": "localhost",
+    "broker_port": 1883,
+    "devices":[
+        {
+            	"type": "Temprature",
+            	"publish_frequency": 5,
+            	"publish_topic": "devices/temp",
+            	"std_val": 25,
+            	"device_count": 1
+        },
+	{
+		"type": "Humidity",
+            	"publish_frequency": 7,
+            	"publish_topic": "devices/hum",
+            	"std_val": 40,
+            	"device_count": 1
+
+	}
+    ]
+}
+
