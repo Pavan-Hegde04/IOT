@@ -1,0 +1,110 @@
+[
+    {
+        "id": "532fcb35cbcda8ae",
+        "type": "inject",
+        "z": "0b74af99d8d5aba7",
+        "name": "Basic Flow",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Data",
+        "payloadType": "str",
+        "x": 110,
+        "y": 300,
+        "wires": [
+            [
+                "ddb84f86c874c737"
+            ]
+        ]
+    },
+    {
+        "id": "4c472425b4b43bed",
+        "type": "debug",
+        "z": "0b74af99d8d5aba7",
+        "name": "Anonymal data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e667803cb260212a",
+        "type": "debug",
+        "z": "0b74af99d8d5aba7",
+        "name": "Raw Data",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ddb84f86c874c737",
+        "type": "function",
+        "z": "0b74af99d8d5aba7",
+        "name": "data_logger",
+        "func": "var message = {}\nlet current = new Date()\nlet cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();\nlet cTime = current.getHours() + \":\" + current.getMinutes() + \":\" + current.getSeconds();\nlet dateTime = cDate + ' ' + cTime;\nmessage[\"timestamp\"] = dateTime;\nmessage[\"deviceid\"] = \"sensor101\";\nmessage[\"device_type\"] = \"temperature\";\nmessage[\"value\"] = Math.floor((Math.random() * 18) + 18);\nreturn {payload : message};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Javascript code used in the function node. \n//You can edit this code to add and delete more data points\n",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 300,
+        "wires": [
+            [
+                "2703157b9a6f62c8",
+                "e667803cb260212a"
+            ]
+        ]
+    },
+    {
+        "id": "2703157b9a6f62c8",
+        "type": "switch",
+        "z": "0b74af99d8d5aba7",
+        "name": "Temprature",
+        "property": "payload.value",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "34",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "4c472425b4b43bed"
+            ]
+        ]
+    }
+]
